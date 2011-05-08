@@ -1,6 +1,6 @@
 <?php
 /**
- * Strings lib class file
+ * Strings class file
  * Created on 24 avr. 2010 at 11:26:14 by ronan
  *
  * @author Ronan GUILLOUX
@@ -11,7 +11,7 @@
  */
 
 /**
- * Utils lib class
+ * Strings lib class
  * @author : mostly php.net contributors
  *
  */
@@ -77,5 +77,29 @@ class Strings
             $string_new[] = $astring;
         }
         return implode(" ",$string_new);
+    }
+
+    /**
+     * Convert unwanted smart quotes.
+     *
+     * @param smartquoted $string
+     * @return unsmartquoted
+     * @see http://shiflett.org/blog/2005/oct/convert-smart-quotes-with-php
+     */
+    protected function convert_smart_quotes($string)
+    {
+        $search = array(chr(145),
+                chr(146),
+                chr(147),
+                chr(148),
+                chr(151));
+
+        $replace = array("'",
+                "'", 
+                '"', 
+                '"', 
+                '-'); 
+
+        return str_replace($search, $replace, $string);
     }
 }
