@@ -35,6 +35,21 @@ class Web2
     }
 
     /**
+     * Get website favicon from url
+     *
+     * @author snipplr.com 
+     * @param string $url
+     * @return string favicon url
+     */
+    public static function GetFavicon($url)
+{
+  $url = str_replace("http://",'',$url);
+  //TODO : regex that removes the last part of the url and detects errors
+  return "http://www.google.com/s2/favicons?domain=".$url;
+
+
+
+    /**
      * Takes a string and makes it SEO and URL friendly
      * 
      * @param string $string

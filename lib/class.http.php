@@ -42,6 +42,9 @@ class Http
     }
 
     /**
+     * Force Download 
+     *
+     * @author Alessio Delmonti
      * @param $file - path to file
      */
     public static function ForceDownload($file)

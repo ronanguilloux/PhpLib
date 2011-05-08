@@ -86,7 +86,7 @@ class Strings
      * @return unsmartquoted
      * @see http://shiflett.org/blog/2005/oct/convert-smart-quotes-with-php
      */
-    protected function convert_smart_quotes($string)
+    public static function ConvertSmartQuotes($string)
     {
         $search = array(chr(145),
                 chr(146),
@@ -101,5 +101,43 @@ class Strings
                 '-'); 
 
         return str_replace($search, $replace, $string);
+    }
+
+    /**
+     * Get the text between $start and $end
+     *
+     * @author jonasjohn.de
+     * @param string $content (all content)
+     * @param string $start
+     * @param string $end
+     * @return string
+     */
+    public static function GetBetween($content, $start, $end)
+    {
+        $r = explode($start, $content);
+        if (isset($r[1])){
+            $r = explode($end, $r[1]);
+            return $r[0];
+        }
+        return '';
+    }
+
+
+    /**
+     * Return (bool) if $x contains $y
+     *
+     * @author jonasjohn.de
+     * @param string $str
+     * @param string $content
+     * @param bool $ignorecase
+     * @return boolean
+     */
+    public static function Contains($str, $content, $ignorecase = true)
+    {
+        if ($ignorecase){
+            $str = strtolower($str);
+            $content = strtolower($content);
+        }
+        return strpos($content,$str) ? true : false;
     }
 }
