@@ -66,6 +66,27 @@ class FileSystem
     }
 
     /**
+     * Evaluate a file's extension value
+     *
+     * @param string filepath
+     * @return mixed : a boolean (false) or a valid string
+     */
+    public static function getExtension($filepath){
+        if(!file_exists($filepath)) return false;
+        $extension = false;
+        $filename = basename($filepath);
+        if (strstr($filename, ".")){
+            $tmp_extension = explode('.', $filename);
+            $tmp_extension = $tmp_extension[count($tmp_extension)-1];
+            if($tmp_extension != '' && $tmp_extension != $file_data['name']) {
+                $extension = '.'.$tmp_extension;
+            }
+        }
+
+        return $extension;
+    }
+
+    /**
      * Delete a dir
      *
      * precondition: $dir is a valid directory

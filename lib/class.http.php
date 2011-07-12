@@ -19,43 +19,30 @@ class Http
 {
 
     /**
-     * Get Client’s real IP address
-     *
-     * @return IP address
-     */
-    public static function GetRealIpAddr()
-    {
-        if (!empty($_SERVER['HTTP_CLIENT_IP']))
-        {
-            $ip=$_SERVER['HTTP_CLIENT_IP'];
-        }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-            //to check ip is pass from proxy
-        {
-            $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
-        else
-        {
-            $ip=$_SERVER['REMOTE_ADDR'];
-        }
-        return $ip;
-    }
-
-    /**
      * Force Download 
      *
      * @author Alessio Delmonti
      * @param $file - path to file
      */
-    public static function ForceDownload($file)
+    public static function ForceDownload($file, $filename = null)
     {
-        if ((isset($file))&&(file_exists($file))) {
+        $extension = "";
+
+        // Fixing filename value
+        if(!isset($filename)){
+            $filename = basename($file);
+        }
+
+        if ((isset($file))&&(file_exists($realpath(file)))) {
+            $file = realpath($file);
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $realPath);
             header("Content-length: ".filesize($file));
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="' . $file . '"');
+            header('Content-Type: ' . $mime_type);
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
             readfile("$file");
         } else {
-            echo "No file selected";
+            echo "<html><p>$file not found.</p></html>";
         }
     }
 
@@ -68,8 +55,8 @@ class Http
     {
         if (preg_match('/^(http|https|ftp)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?/i', $url)) {
             return true;
-    }
-    return false;
+        }
+        return false;
     }
 
 
@@ -164,15 +151,15 @@ class Http
      *
      * @example
      if (Http::DomainCheck($domainName) != -1) {
-     echo "Cannot reach the server!" ;
+         echo "Cannot reach the server!" ;
      } else {
-     echo "Server's running well." ;
+         echo "Server's running well." ;
      }
      *   
      * @param string $domainName, ex : http://snipplr.com
      * @return server status
      */
-    function static function DomainCheck($domainName)
+    public static function DomainCheck($domainName)
     {
         $startTime = microtime(true);
         $openDomain = fsockopen ($domainName, 80, $errno, $errstr, 10);
@@ -194,7 +181,7 @@ class Http
      * 
      * @return IP value
      */
-    function static function GetRealIpAddr()
+    public static function GetRealIpAddr()
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip=$_SERVER['HTTP_CLIENT_IP'];
