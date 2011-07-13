@@ -30,8 +30,8 @@ class Web2
     public static function ShowGravatar($email, $size, $default,  $rating)
     {
         return '<img src="http://www.gravatar.com/avatar.php?gravatar_id='.md5($email).
-        '&default='.$default.'&size='.$size.'&rating='.$rating.'" width="'.$size.'px"
-        height="'.$size.'px" />';
+            '&default='.$default.'&size='.$size.'&rating='.$rating.'" width="'.$size.'px"
+            height="'.$size.'px" />';
     }
 
     /**
@@ -42,12 +42,12 @@ class Web2
      * @return string favicon url
      */
     public static function GetFavicon($url)
-{
-  $url = str_replace("http://",'',$url);
-  //TODO : regex that removes the last part of the url and detects errors
-  return "http://www.google.com/s2/favicons?domain=".$url;
+    {
+        $url = str_replace("http://",'',$url);
+        //TODO : regex that removes the last part of the url and detects errors
+        return "http://www.google.com/s2/favicons?domain=".$url;
 
-
+    }
 
     /**
      * Takes a string and makes it SEO and URL friendly
@@ -90,4 +90,44 @@ class Web2
             return $keywords;
         }
     }
+
+    /**
+     * Slugify : Modifies a string to remove all non ASCII characters and spaces.
+     *
+     * @link http://sourcecookbook.com/en/recipes/8/function-to-slugify-strings-in-php
+     * @param string $text
+     * @param char
+     * @return string slugified_text
+     */
+    public static function Slugify($text, $char = '_')
+    {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\\pL\d]+~u', $char, $text);
+        $text = trim($text, $char);
+        // transliterate
+        if (function_exists('iconv'))
+        {
+            $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        }
+        $text = strtolower($text);
+        // remove unwanted characters
+        $text = preg_replace('~[^'.$char.'\w]+~', '', $text);
+        if (empty($text))
+        {
+            return 'n-a';
+        }
+        return $text;
+    }
+
+    public static function urlize($string){
+        $find   = array(
+            '/[^A-Za-z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]/'  #alphanum + accents
+            ,'/[-]+/'             # multi -
+            ,'/(^-)/'             # - as begin
+            ,'/(-$)/'             # - as end
+        );
+        $repl = array('-','-','','');
+        return preg_replace($find, $repl, $string);
+    }
+
 }

@@ -122,6 +122,36 @@ class Strings
         return '';
     }
 
+    /**
+     * NiceImplode : Implode an associative array to a nice formatted string
+     *
+     * @param mixed $assoc_array
+     * @link http://fr2.php.net/implode
+     * @return string imploded associative array
+     */
+    public static function NiceImplode($assoc_array)
+    {
+        $new_array = array_map(create_function('$key, $value', 'return $key.":".$value." --- ";'), array_keys($assoc_array), array_values($assoc_array));
+        return implode($new_array);
+    }
+
+
+    public static function array_merge_recursive_simple($Arr1, $Arr2)
+    {
+        foreach($Arr2 as $key => $Value)
+        {
+            if(array_key_exists($key, $Arr1) && is_array($Value))
+                $Arr1[$key] = self::array_merge_recursive_simple($Arr1[$key], $Arr2[$key]);
+
+            else
+                $Arr1[$key] = $Value;
+
+        }
+
+        return $Arr1;
+
+    }
+
 
     /**
      * Return (bool) if $x contains $y
@@ -139,5 +169,12 @@ class Strings
             $content = strtolower($content);
         }
         return strpos($content,$str) ? true : false;
+    }
+
+    public static function sanitize($entry){
+        if(is_string($entry)){
+            return htmlspecialchars(trim($entry));
+        }
+        return $entry;
     }
 }
