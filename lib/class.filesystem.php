@@ -73,17 +73,8 @@ class FileSystem
      */
     public static function getExtension($filepath){
         if(!file_exists($filepath)) return false;
-        $extension = false;
-        $filename = basename($filepath);
-        if (strstr($filename, ".")){
-            $tmp_extension = explode('.', $filename);
-            $tmp_extension = $tmp_extension[count($tmp_extension)-1];
-            if($tmp_extension != '' && $tmp_extension != $file_data['name']) {
-                $extension = '.'.$tmp_extension;
-            }
-        }
-
-        return $extension;
+        if(is_readable($filepath)) return false;
+        return pathinfo($filepath, PATHINFO_EXTENSION);
     }
 
 
@@ -113,38 +104,38 @@ class FileSystem
      * precondition: $dir is a valid directory
      * postcondition: $dir and all it's contents are removed
      * @param string $dir
-         */
-        public static function DelTree( $dir ) {
-            $files = glob( $dir . '*', GLOB_MARK ); // find all files in the directory
+     */
+     public static function DelTree( $dir ) {
+         $files = glob( $dir . '*', GLOB_MARK ); // find all files in the directory
 
-            foreach( $files as $file ) {
-                if( substr( $file, -1 ) == '/' )
-                    $this->DelTree( $file ); // recursively apply this to sub directories
-                else
-                    unlink( $file );
-            }
+         foreach( $files as $file ) {
+             if( substr( $file, -1 ) == '/' )
+                 $this->DelTree( $file ); // recursively apply this to sub directories
+             else
+                 unlink( $file );
+         }
 
-            if ( is_dir( $dir ) )
-                rmdir( $dir ); // remove the directory itself (rmdir only removes a directory once it is empty)
-        }
+         if ( is_dir( $dir ) )
+             rmdir( $dir ); // remove the directory itself (rmdir only removes a directory once it is empty)
+     }
 
-        public static function ListFiles($dir)
+    public static function ListFiles($dir)
+    {
+        if(is_dir($dir))
         {
-            if(is_dir($dir))
+            if($handle = opendir($dir))
             {
-                if($handle = opendir($dir))
+                while(($file = readdir($handle)) !== false)
                 {
-                    while(($file = readdir($handle)) !== false)
+                    if($file != "." && $file != ".." && $file != "Thumbs.db")
                     {
-                        if($file != "." && $file != ".." && $file != "Thumbs.db")
-                        {
-                            echo '<a target="_blank" href="'.$dir.$file.'">'.$file.'</a><br>'."\n";
-                        }
+                        echo '<a target="_blank" href="'.$dir.$file.'">'.$file.'</a><br>'."\n";
                     }
-                    closedir($handle);
                 }
+                closedir($handle);
             }
         }
+    }
 
         /**
          * Destroy a dir
