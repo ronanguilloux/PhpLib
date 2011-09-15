@@ -21,7 +21,7 @@ class Encryption
      * @param string $list
      * @param int $chrs
      */
-    public static function PasswordCreate($list = "0123456789ABCDEF", $chrs = 8)
+    public static function passwordCreate($list = "0123456789ABCDEF", $chrs = 8)
     {
         mt_srand((double)microtime()*1000000);
         $generated = '';
@@ -31,7 +31,7 @@ class Encryption
         return $generated;
     }
 
-    public static function RandomStringCreate($string = "abcdefghijklmnopqrstuvwxyz0123456789", $length=25){
+    public static function randomStringCreate($string = "abcdefghijklmnopqrstuvwxyz0123456789", $length=25){
 
         for($i=0;$i<$length;$i++){
             $pos = rand(0,36);
@@ -39,17 +39,17 @@ class Encryption
         }
         return $str;
     }
-    
+
     /**
      * Encrypt a text using Mcrypt
      *
-     * @see http://maxime-ohayon.developpez.com/tutoriels/mcrypt 
+     * @see http://maxime-ohayon.developpez.com/tutoriels/mcrypt
      * @param string $algorithm, ex : MCRYPT_3DES, MCRYPT_BLOWFISH, etc. see Mcrpyt doc
      * @param string $mode, ex : MCRYPT_MODE_ECB, MCRYPT_MODE_NOFB, etc. see Mcrpyt doc
      * @param string $key = your secret key or passphrase
-     * @param string $text : your text to be encrypted  
+     * @param string $text : your text to be encrypted
      */
-    public static function Encrypt($algorithm = MCRYPT_BLOWFISH, $mode = MCRYPT_MODE_NOFB, $key = "mySecretKey", $text = "textToEncrypt")
+    public static function encrypt($algorithm = MCRYPT_BLOWFISH, $mode = MCRYPT_MODE_NOFB, $key = "mySecretKey", $text = "textToEncrypt")
     {
         $key_size = mcrypt_module_get_algo_key_size($algorithm);
         $iv_size = mcrypt_get_iv_size($algorithm, $mode);
@@ -58,17 +58,17 @@ class Encryption
         return mcrypt_encrypt($algorithm, $key, $text, $mode, $iv);
 
     }
-    
+
     /**
      * Decrypt a text using Mcrypt
      *
-     * @see http://maxime-ohayon.developpez.com/tutoriels/mcrypt 
+     * @see http://maxime-ohayon.developpez.com/tutoriels/mcrypt
      * @param string $algorithm, ex : MCRYPT_3DES, MCRYPT_BLOWFISH, etc. see Mcrpyt doc
      * @param string $mode, ex : MCRYPT_MODE_ECB, MCRYPT_MODE_NOFB, etc. see Mcrpyt doc
      * @param string $key = your secret key or passphrase
      * @param string $encrypted : your value to be decrypted
      */
-    public static function Decrypt($algorithm = MCRYPT_BLOWFISH, $mode = MCRYPT_MODE_NOFB, $key = "mySecretKey", $encrypted = "encryptedText")
+    public static function decrypt($algorithm = MCRYPT_BLOWFISH, $mode = MCRYPT_MODE_NOFB, $key = "mySecretKey", $encrypted = "encryptedText")
     {
         $key_size = mcrypt_module_get_algo_key_size($algorithm);
         $iv_size = mcrypt_get_iv_size($algorithm, $mode);
@@ -79,4 +79,4 @@ class Encryption
 
 }
 
-}
+

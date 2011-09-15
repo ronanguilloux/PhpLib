@@ -1,2 +1,2 @@
 Simple PHP lib, tools & helpers, all GNU GPL'd.
-See also http://www.jonasjohn.de/snippets/php/
+Inspered by http://www.jonasjohn.de/snippets/php/

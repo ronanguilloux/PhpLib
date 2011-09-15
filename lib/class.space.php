@@ -28,7 +28,7 @@ class Space
      * @param double $lonB
      * @return unknown
      */
-    public static function Distance($latA, $lonA, $latB, $lonB)
+    public static function distance($latA, $lonA, $latB, $lonB)
     {
         // convert from degrees to radians
         $latA = deg2rad($latA); $lonA = deg2rad($lonA);
@@ -50,11 +50,11 @@ class Space
      * Calculate the distance from a point A to a point B, using latitudes and longitudes.
      * The function can return the distance in miles, kilometers, or nautical miles
      *
-     * @author zipcodeworld   
+     * @author zipcodeworld
      * @example echo distance(32.9697, -96.80322, 29.46786, -98.53506, "k")." kilometers";
      */
-    public static function KmDistance($lat1, $lon1, $lat2, $lon2, $unit = 'k') 
-    { 
+    public static function kmDistance($lat1, $lon1, $lat2, $lon2, $unit = 'k')
+    {
 
         $theta = $lon1 - $lon2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
@@ -84,7 +84,7 @@ class Space
         if (!is_string($address))die("All Addresses must be passed as a string");
         $_url = sprintf('http://maps.google.com/maps?output=js&q=%s',rawurlencode($address));
         $_result = false;
-        if($_result = file_get_contents($_url)) 
+        if($_result = file_get_contents($_url))
         {
             if(strpos($_result,'errortips') > 1 || strpos($_result,'Did you mean:') !== false) return false;
             preg_match('!center:\s*{lat:\s*(-?\d+\.\d+),lng:\s*(-?\d+\.\d+)}!U', $_result, $_match);
@@ -93,3 +93,4 @@ class Space
         }
         return $_coords;
     }
+}

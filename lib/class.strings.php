@@ -26,7 +26,7 @@ class Strings
      * ucwords('clermont-ferrand') == 'Clermont-ferrand' ... fixing it :
      * @see http://fr.php.net/manual/en/function.ucwords.php
      */
-    public static function CapitalizeWords($words, $charList = null) {
+    public static function capitalizeWords($words, $charList = null) {
         // Use ucwords if no delimiters are given
         if (!isset($charList)) {
             return ucwords($words);
@@ -53,7 +53,7 @@ class Strings
      * input string
      * return string
      */
-    public static function Lcwords($string)
+    public static function lcWords($string)
     {
         $a = 0;
         $string_new = array();
@@ -62,7 +62,7 @@ class Strings
         {
             for($a=0;$a<strlen($astring);$a++)
             {
-                /* 
+                /*
                  * check that the character we are at {pos $a} is a word
                  * i.e. if the word was !A the code would fail at !
                  * then loop to the next character and succeed at A
@@ -86,7 +86,7 @@ class Strings
      * @return unsmartquoted
      * @see http://shiflett.org/blog/2005/oct/convert-smart-quotes-with-php
      */
-    public static function ConvertSmartQuotes($string)
+    public static function convertSmartQuotes($string)
     {
         $search = array(chr(145),
                 chr(146),
@@ -95,10 +95,10 @@ class Strings
                 chr(151));
 
         $replace = array("'",
-                "'", 
-                '"', 
-                '"', 
-                '-'); 
+                "'",
+                '"',
+                '"',
+                '-');
 
         return str_replace($search, $replace, $string);
     }
@@ -112,7 +112,7 @@ class Strings
      * @param string $end
      * @return string
      */
-    public static function GetBetween($content, $start, $end)
+    public static function getBetween($content, $start, $end)
     {
         $r = explode($start, $content);
         if (isset($r[1])){
@@ -129,7 +129,7 @@ class Strings
      * @link http://fr2.php.net/implode
      * @return string imploded associative array
      */
-    public static function NiceImplode($assoc_array)
+    public static function niceImplode($assoc_array)
     {
         $new_array = array_map(create_function('$key, $value', 'return $key.":".$value." --- ";'), array_keys($assoc_array), array_values($assoc_array));
         return implode($new_array);
@@ -162,7 +162,7 @@ class Strings
      * @param bool $ignorecase
      * @return boolean
      */
-    public static function Contains($str, $content, $ignorecase = true)
+    public static function contains($str, $content, $ignorecase = true)
     {
         if ($ignorecase){
             $str = strtolower($str);
@@ -177,4 +177,44 @@ class Strings
         }
         return $entry;
     }
+
+
+    /**
+     * Modifies a string to remove all non ASCII characters and spaces.
+     * Note : Works with UTF-8
+     * @link http://antoine.goutenoir.com/blog/2010/10/11/php-slugify-a-string/
+     * @param  string $string The text to slugify
+     * @return string The slugified text
+     */
+    function slugify($string) {
+        $string = utf8_decode($string);
+        $string = html_entity_decode($string);
+
+        $a = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ';
+        $b = 'AAAAAAaaaaaaOOOOOOooooooEEEEeeeeCcIIIIiiiiUUUUuuuuyNn';
+        $string = strtr($string, utf8_decode($a), $b);
+
+        $ponctu = array("?", ".", "!", ",");
+        $string = str_replace($ponctu, "", $string);
+
+        $string = trim($string);
+        $string = preg_replace('/([^a-z0-9]+)/i', '-', $string);
+        $string = strtolower($string);
+
+        if (empty($string)) return 'n-a';
+
+        return utf8_encode($string);
+    }
+
+    /**
+     * Removes all linebreaks
+     *
+     * @link http://antoine.goutenoir.com/blog/2010/10/11/php-slugify-a-string/
+     * @param string $string The text to be processed.
+     * @return string The given text without any linebreaks.
+     */
+    function remove_linebreaks ($string) {
+        return (string) str_replace(array("\r", "\r\n", "\n"), '', $string);
+    }
+
 }

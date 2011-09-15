@@ -19,14 +19,14 @@ class Email
 {
 
     /**
-     * Send a simple mail
+     * send a simple mail
      *
      * @param string $from
      * @param string $to
      * @param string $subject
      * @param string $body
      */
-    public static function SendSimpleMail($from,$to,$subject,$body)
+    public static function sendSimpleMail($from,$to,$subject,$body)
     {
         $headers = "From: $from\r\n";
         $headers .= "Reply-To: $from\r\n";
@@ -39,15 +39,15 @@ class Email
 
     /**
      * Email string validator
-     * 
+     *
      * @param string $email - email to validate
      * @return bool
      */
-    public static function Is_Email($email)
+    public static function is_Email($email)
     {
-        return filter_var($email,FILTER_VALIDATE_EMAIL);    
+        return filter_var($email,FILTER_VALIDATE_EMAIL);
     }
-    
-    
+
+
 
 }

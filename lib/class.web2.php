@@ -27,7 +27,7 @@ class Web2
      * @param string $rating - Rating of Gravatar(G, PG, R, X)
      * @return html's <img /> filled tag
      */
-    public static function ShowGravatar($email, $size, $default,  $rating)
+    public static function showGravatar($email, $size, $default,  $rating)
     {
         return '<img src="http://www.gravatar.com/avatar.php?gravatar_id='.md5($email).
             '&default='.$default.'&size='.$size.'&rating='.$rating.'" width="'.$size.'px"
@@ -37,11 +37,11 @@ class Web2
     /**
      * Get website favicon from url
      *
-     * @author snipplr.com 
+     * @author snipplr.com
      * @param string $url
      * @return string favicon url
      */
-    public static function GetFavicon($url)
+    public static function getFavicon($url)
     {
         $url = str_replace("http://",'',$url);
         //TODO : regex that removes the last part of the url and detects errors
@@ -51,7 +51,7 @@ class Web2
 
     /**
      * Takes a string and makes it SEO and URL friendly
-     * 
+     *
      * @param string $string
      * return SEOized string
      */
@@ -66,12 +66,12 @@ class Web2
 
     /**
      * Get GoogleKeyWords used in referer URL
-     * 
+     *
      * @param string $referer (null, URL or $_SERVER['HTTP_REFERER'])
      * @return keywords array
      * @see http://webarto.com/12/php-google-keywords
      */
-    public static function GetGoogleKeyWordUsed($referer = null)
+    public static function getGoogleKeyWordUsed($referer = null)
     {
         // see
         if(is_null($referer)) {
@@ -99,7 +99,7 @@ class Web2
      * @param char
      * @return string slugified_text
      */
-    public static function Slugify($text, $char = '_')
+    public static function slugify($text, $char = '_')
     {
         // replace non letter or digits by -
         $text = preg_replace('~[^\\pL\d]+~u', $char, $text);

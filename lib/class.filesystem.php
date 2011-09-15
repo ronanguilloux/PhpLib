@@ -6,7 +6,7 @@
  * @author Ronan GUILLOUX
  * @license http://www.gnu.org/licenses/gpl.html GNU GPL v3
  * @version 1.0
- * @package PhpLib 
+ * @package PhpLib
  * @filesource filesystem.http.php
  * @see http://fr.php.net/manual/fr/class.recursivedirectoryiterator.php
  * @see http://fr.php.net/manual/fr/class.directoryiterator.php
@@ -31,7 +31,7 @@ class FileSystem
      * @see http://www.lateralcode.com/remove-svn-php/
      * @tutorial <?php removeSVN( './' ); ?>
      */
-    public function RemoveSVN( $dir ) {
+    public function removeSVN( $dir ) {
         echo "Searching: $dir\n\t";
 
         $flag = false; // haven't found .svn directory
@@ -61,7 +61,7 @@ class FileSystem
                 continue;
 
             if( is_dir( $dir . $file ) )
-                $this->RemoveSVN( $dir . $file . '/' ); // apply the SVN removal for sub directories
+                $this->removeSVN( $dir . $file . '/' ); // apply the SVN removal for sub directories
         }
     }
 
@@ -119,7 +119,7 @@ class FileSystem
              rmdir( $dir ); // remove the directory itself (rmdir only removes a directory once it is empty)
      }
 
-    public static function ListFiles($dir)
+    public static function listFiles($dir)
     {
         if(is_dir($dir))
         {
@@ -143,7 +143,7 @@ class FileSystem
          * @param string $dir
          * @param bool $virtual
          */
-        public static function DestroyDir($dir, $virtual  = false)
+        public static function destroyDir($dir, $virtual  = false)
         {
             $ds = DIRECTORY_SEPARATOR;
             $dir = $virtual ? realpath($dir) : $dir;
@@ -185,7 +185,7 @@ class FileSystem
          * @param string $destination
          * @param bool $overwrite
          */
-        public static function ZipCreate($files = array(),$destination = '',$overwrite = false) {
+        public static function zipCreate($files = array(),$destination = '',$overwrite = false) {
             //if the zip file already exists and overwrite is false, return false
             if(file_exists($destination) && !$overwrite) { return false; }
                 //vars
@@ -233,7 +233,7 @@ class FileSystem
          * @param string $file path to zip file
          * @param string $destination destination directory for unzipped files
          */
-        public static function UnzipFile($file, $destination){
+        public static function unzipFile($file, $destination){
             // create object
             $zip = new ZipArchive() ;
             // open archive
@@ -327,7 +327,7 @@ class FileSystem
                         'size'=>$ss['size'], //Size of file, in bytes.
                         'blocks'=>$ss['blocks'], //Number 512-byte blocks allocated
                         'block_size'=> $ss['blksize'] //Optimal block size for I/O.
-                    ), 
+                    ),
 
                     'time'=>array(
                         'mtime'=>$ss['mtime'], //Time of last modification
@@ -352,7 +352,7 @@ class FileSystem
          * @param string $directory full path
          * @return string path of the most recent file found in $directory
          */
-        public static function GetMostRecentFile($directory)
+        public static function getMostRecentFile($directory)
         {
             $files = glob( $directory.'/*.*' );
             array_multisort( array_map( 'filemtime', $files ), SORT_NUMERIC, SORT_DESC, $files );
