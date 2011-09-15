@@ -24,7 +24,7 @@ class Http
      * @author Alessio Delmonti
      * @param $file - path to file
      */
-    public static function ForceDownload($file, $filename = null)
+    public static function forceDownload($file, $filename = null)
     {
         $extension = "";
 
@@ -51,7 +51,7 @@ class Http
      *
      * @param string $url - Url to validate
      */
-    public static function Is_valid_url($url)
+    public static function is_valid_url($url)
     {
         if (preg_match('/^(http|https|ftp)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?/i', $url)) {
             return true;
@@ -66,7 +66,7 @@ class Http
      * @param string $url
      * @return string title
      */
-    public static function GetTitleValue($url)
+    public static function getTitleValue($url)
     {
         $fp = fopen($url,"r");
         while (!feof($fp) ){
@@ -84,7 +84,7 @@ class Http
      * @param string $page html source
      * @return string title
      */
-    public static function GetPageTitleFromSource($page)
+    public static function getPageTitleFromSource($page)
     {
         preg_match("/<title>(.*)<\/title>/imsU", $page, $matches);
         return $matches[1];
@@ -97,7 +97,7 @@ class Http
      * @param string $tag - such as "body class='web'"
      * @return string title
      */
-    public static function GetTagValue($url,$tag)
+    public static function getTagValue($url,$tag)
     {
         $fp = fopen($url,"r");
         while (!feof($fp) ){
@@ -117,7 +117,7 @@ class Http
      * @param int $max-depth, 9 as default value
      * @return array
      */
-    public static function GetURLs($content, $depth = 0, $max_depth = 9)
+    public static function getURLs($content, $depth = 0, $max_depth = 9)
     {
         if ($depth >= $max_depth) return array();
         $matches = array();
@@ -132,7 +132,7 @@ class Http
      *
      * @return localization
      */
-    public static function GetLocalization()
+    public static function getLocalization()
     {
 
         ( ( (float)phpversion() < 5.3 ) ) ? die ( "Fatal error : PHP < 5.3 !, can't proceed in " . __CLASS__ . '::' . __METHOD__ ) : '';
@@ -150,7 +150,7 @@ class Http
      * Check a domain
      *
      * @example
-     if (Http::DomainCheck($domainName) != -1) {
+     if (Http::domainCheck($domainName) != -1) {
          echo "Cannot reach the server!" ;
 } else {
     echo "Server's running well." ;
@@ -159,7 +159,7 @@ class Http
     * @param string $domainName, ex : http://snipplr.com
     * @return server status
      */
-    public static function DomainCheck($domainName)
+    public static function domainCheck($domainName)
     {
         $startTime = microtime(true);
         $openDomain = fsockopen ($domainName, 80, $errno, $errstr, 10);
@@ -181,7 +181,7 @@ class Http
      *
      * @return IP value
      */
-    public static function GetRealIpAddr()
+    public static function getRealIpAddr()
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip=$_SERVER['HTTP_CLIENT_IP'];
