@@ -19,7 +19,7 @@ class Http
 {
 
     /**
-     * Force Download 
+     * Force Download
      *
      * @author Alessio Delmonti
      * @param $file - path to file
@@ -80,11 +80,11 @@ class Http
 
     /**
      * Get title tag content from html source
-     * 
+     *
      * @param string $page html source
      * @return string title
      */
-    public static function GetPageTitleFromSource($page) 
+    public static function GetPageTitleFromSource($page)
     {
         preg_match("/<title>(.*)<\/title>/imsU", $page, $matches);
         return $matches[1];
@@ -116,8 +116,8 @@ class Http
      * @param int depth, 0 as default value
      * @param int $max-depth, 9 as default value
      * @return array
-     */ 
-    public static function GetURLs($content, $depth = 0, $max_depth = 9) 
+     */
+    public static function GetURLs($content, $depth = 0, $max_depth = 9)
     {
         if ($depth >= $max_depth) return array();
         $matches = array();
@@ -131,7 +131,7 @@ class Http
      * Get localization using Google trick
      *
      * @return localization
-     */ 
+     */
     public static function GetLocalization()
     {
 
@@ -152,12 +152,12 @@ class Http
      * @example
      if (Http::DomainCheck($domainName) != -1) {
          echo "Cannot reach the server!" ;
-     } else {
-         echo "Server's running well." ;
-     }
-     *   
-     * @param string $domainName, ex : http://snipplr.com
-     * @return server status
+} else {
+    echo "Server's running well." ;
+}
+*
+    * @param string $domainName, ex : http://snipplr.com
+    * @return server status
      */
     public static function DomainCheck($domainName)
     {
@@ -166,7 +166,7 @@ class Http
         $finishTime  = microtime(true);
         $serverStatus    = 0;
 
-        if (!$openDomain) $serverStatus = -1;  
+        if (!$openDomain) $serverStatus = -1;
         else {
             fclose($openDomain);
             $status = ($finishTime - $startTime) * 1000;
@@ -178,7 +178,7 @@ class Http
 
     /**
      * Get Real IP Address, using $_SERVER array, HTTP_* values
-     * 
+     *
      * @return IP value
      */
     public static function GetRealIpAddr()
@@ -191,6 +191,29 @@ class Http
             $ip=$_SERVER['REMOTE_ADDR'];
         }
         return $ip;
+    }
+
+    /**
+     * Uses cURL to retrieve an url and keep session information
+     *
+     * @link http://stackoverflow.com/questions/1082302/file-get-contents-from-url-that-is-only-accessible-after-log-in-to-website
+     */
+    protected static function getUrl($url, $method='', $vars='')
+    {
+        $ch = curl_init();
+        if ($method == 'post')
+        {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
+        }
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookies.txt');
+        curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookies.txt');
+        $buffer = curl_exec($ch);
+        curl_close($ch);
+        return $buffer;
     }
 
 }
