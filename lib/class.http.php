@@ -216,4 +216,22 @@ class Http
         return $buffer;
     }
 
+    /**
+     * Base64 Encode
+     */
+    public static function base64url_encode($plainText) {
+        $base64 = base64_encode($plainText);
+        $base64url = strtr($base64, '+/=', '-_,');
+        return $base64url;
+    }
+
+    /**
+     * Base64 Decode
+     */
+    public static function base64url_decode($plainText) {
+        $base64url = strtr($plainText, '-_,', '+/=');
+        $base64 = base64_decode($base64url);
+        return $base64;
+    }
+
 }

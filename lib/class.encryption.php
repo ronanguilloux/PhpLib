@@ -77,6 +77,19 @@ class Encryption
         return mcrypt_decrypt($algorithm, $key, $cyphered, $mode, $iv);
     }
 
+
+    /**
+     *   random string token generator
+     */
+    public static function randomToken() {
+        $string = "abcdefghijklmnopqrstuvwxyz0123456789";
+        for($i=0;$i<25;$i++){
+            $pos = rand(0,36);
+            $str .= $string{$pos};
+        }
+        return $str;
+    }
+
 }
 
 

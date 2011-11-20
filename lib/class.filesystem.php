@@ -104,38 +104,38 @@ class FileSystem
      * precondition: $dir is a valid directory
      * postcondition: $dir and all it's contents are removed
      * @param string $dir
-     */
-     public static function DelTree( $dir ) {
-         $files = glob( $dir . '*', GLOB_MARK ); // find all files in the directory
+         */
+        public static function DelTree( $dir ) {
+            $files = glob( $dir . '*', GLOB_MARK ); // find all files in the directory
 
-         foreach( $files as $file ) {
-             if( substr( $file, -1 ) == '/' )
-                 $this->DelTree( $file ); // recursively apply this to sub directories
-             else
-                 unlink( $file );
-         }
+            foreach( $files as $file ) {
+                if( substr( $file, -1 ) == '/' )
+                    $this->DelTree( $file ); // recursively apply this to sub directories
+                else
+                    unlink( $file );
+            }
 
-         if ( is_dir( $dir ) )
-             rmdir( $dir ); // remove the directory itself (rmdir only removes a directory once it is empty)
-     }
+            if ( is_dir( $dir ) )
+                rmdir( $dir ); // remove the directory itself (rmdir only removes a directory once it is empty)
+        }
 
-    public static function listFiles($dir)
-    {
-        if(is_dir($dir))
+        public static function listFiles($dir)
         {
-            if($handle = opendir($dir))
+            if(is_dir($dir))
             {
-                while(($file = readdir($handle)) !== false)
+                if($handle = opendir($dir))
                 {
-                    if($file != "." && $file != ".." && $file != "Thumbs.db")
+                    while(($file = readdir($handle)) !== false)
                     {
-                        echo '<a target="_blank" href="'.$dir.$file.'">'.$file.'</a><br>'."\n";
+                        if($file != "." && $file != ".." && $file != "Thumbs.db")
+                        {
+                            echo '<a target="_blank" href="'.$dir.$file.'">'.$file.'</a><br>'."\n";
+                        }
                     }
+                    closedir($handle);
                 }
-                closedir($handle);
             }
         }
-    }
 
         /**
          * Destroy a dir
@@ -246,6 +246,23 @@ class FileSystem
             $zip->close();
             echo 'Archive extracted to directory';
         }
+
+
+        // Other unzip method
+        public static function unZip($location,$newLocation){
+            if(exec("unzip $location",$arr)){
+                mkdir($newLocation);
+                for($i = 1;$i< count($arr);$i++){
+                    $file = trim(preg_replace("~inflating: ~","",$arr[$i]));
+                    copy($location.'/'.$file,$newLocation.'/'.$file);
+                    unlink($location.'/'.$file);
+                }
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+
 
         // see http://fr.php.net/manual/fr/function.stat.php
         public static function alt_stat($file) {
