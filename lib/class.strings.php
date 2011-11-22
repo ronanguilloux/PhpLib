@@ -217,4 +217,18 @@ class Strings
         return (string) str_replace(array("\r", "\r\n", "\n"), '', $string);
     }
 
+    /**
+     * is_html : Tests a string & check if it's html
+     *
+     * @param mixed $string
+     * @return string
+     */
+    function isHtml($string) {
+        if(strlen($string) == strlen(strip_tags($string))){
+            return false
+        }
+
+        return true;
+    }
+
 }
