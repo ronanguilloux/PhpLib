@@ -1,0 +1,87 @@
+* commit 4439f99f1dadc8c4dff102f5a4ef2e8346ec4af6
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Nov 30 22:05:29 2011 +0100
+| 
+|     adding first Phpunit tests, decent readme & agpl v3license
+|  
+* commit d11c430fd9d999f4b1d9696c768847603139bdb7
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Tue Nov 22 15:33:19 2011 +0100
+| 
+|     isHtml func
+|  
+* commit 10671c681a5b4ffcc9720ec41ee032aadec5595a
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Sun Nov 20 20:58:10 2011 +0100
+| 
+|     Other useful PHP code snippets
+|  
+* commit 0f88466b55d1d0f2036b1825fd32a7036663928d
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Thu Sep 15 17:07:00 2011 +0200
+| 
+|     lowercasing method names
+|    
+*   commit 0b6afe7a814dbfa6f1925f3501c4ba689cd50d46
+|\  Merge: f861939 6a653eb
+| | Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| | Date:   Thu Sep 15 17:00:39 2011 +0200
+| | 
+| |     Merge branch 'master' of github.com:ronanguilloux/PhpLib
+| |     
+| |     Conflicts:
+| |     	lib/class.http.php
+| |   
+| * commit 6a653eb9dda6d0deea2d722b0bc765206c7f4f8f
+| | Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| | Date:   Fri Jul 22 05:02:12 2011 -0700
+| | 
+| |     camelCased methods name
+| |   
+* | commit f861939ec3e6cd7d27421bbbe9b051c711034c5c
+| | Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| | Date:   Thu Sep 15 16:58:06 2011 +0200
+| | 
+| |     +1 curl func using current cookie session
+| |   
+* | commit a5903853e0f88ee04ed6ae73db5edf86f04e52ee
+|/  Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+|   Date:   Tue Aug 16 09:59:41 2011 +0200
+|   
+|       getting file extension, the pathinfo way
+|  
+* commit 62d1130c5c9a3ea6511898ec1984d373e7d0bb61
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Jul 13 09:21:46 2011 +0200
+| 
+|     +3 new helpers methods
+|  
+* commit 77b9816f5c4377de7024c949f18f9af863d02924
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Tue Jul 12 13:07:22 2011 +0200
+| 
+|     Fixing methods declaration, enhancing force-download, adding a file-extension detector
+|  
+* commit 44e65f9d2d95dfe926811171da15e537053c64b5
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Sun May 8 18:08:13 2011 +0200
+| 
+|     Adding new helpers
+|  
+* commit d2e1cdfa6e4f99944fe9642c0839fb2d5eff2460
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Sun May 8 17:05:24 2011 +0200
+| 
+|     Adding various helpers
+|  
+* commit 5eb87a992dddf8229f60e0e380adc2c8bb8a8da5
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Fri Apr 15 08:34:30 2011 +0200
+| 
+|     Adding Strings utility class
+|  
+* commit cfd0a3c4014c4a9530e5b3e764fab180f82da54b
+  Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+  Date:   Thu Apr 7 14:11:42 2011 +0200
+  
+      first commit
