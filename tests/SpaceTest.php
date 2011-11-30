@@ -9,8 +9,6 @@
  * @version //autogentag//
  */
 
-require_once(__DIR__ . '/../lib/class.space.php');
-
 class SpaceTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -28,7 +26,7 @@ class SpaceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(true);
         $lats = array(51.538, 51.537, '51.539', 51.537, 51.537, 'foo', 51.538, null);
         $longs = array(-0.193, -0.192, '-0.195', '-0,192' , 'bar', -0.195, '', -0.193);
-        $expecteds = array('0,91', '0,79', false, false, false, false,false);
+        $expecteds = array('0.91', '0,79', false, false, false, false,false);
         $spacer = new Space();
         $fromLat = 51.53;
         $fromLong = -0.19;

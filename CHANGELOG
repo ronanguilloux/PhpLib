@@ -1,3 +1,15 @@
+* commit 4df2b1332997a0d8b8a4cb622e6cee474b257fe0
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Nov 30 22:52:37 2011 +0100
+| 
+|     phpunit bootstrapper added, travis CI integration added
+|  
+* commit 5ee4e9e0df52b80e3792a3140cbcadf15cb33ef8
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Nov 30 22:10:11 2011 +0100
+| 
+|     adding CHANGELOG, git-log generated
+|  
 * commit 4439f99f1dadc8c4dff102f5a4ef2e8346ec4af6
 | Author: Ronan Guilloux <ronan.guilloux@gmail.com>
 | Date:   Wed Nov 30 22:05:29 2011 +0100
