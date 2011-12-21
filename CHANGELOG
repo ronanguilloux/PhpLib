@@ -1,3 +1,33 @@
+* commit 32ffb79934b1e6cdfdef2be7d87af4b7dbc9fea4
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Dec 21 10:16:10 2011 +0100
+| 
+|     +1 enhanced uppercase func for accents uppercasing
+|  
+* commit 49474b432e7643e73ca65c442580732a7f69bd7d
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Tue Dec 6 14:14:14 2011 +0100
+| 
+|     +1 XML helpers class
+|  
+* commit f33a95a150fdccc0dd45d0a3e1a8ae9395531a08
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Nov 30 23:04:28 2011 +0100
+| 
+|     Travis icon status FTW!
+|  
+* commit 1529451b2488565bf8a150e943c40ba873070de0
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Nov 30 22:59:46 2011 +0100
+| 
+|     typo
+|  
+* commit 5faa05691f4fd291a22d5e097bbbd10e5e704b97
+| Author: Ronan Guilloux <ronan.guilloux@gmail.com>
+| Date:   Wed Nov 30 22:58:55 2011 +0100
+| 
+|     typo
+|  
 * commit 4df2b1332997a0d8b8a4cb622e6cee474b257fe0
 | Author: Ronan Guilloux <ronan.guilloux@gmail.com>
 | Date:   Wed Nov 30 22:52:37 2011 +0100
