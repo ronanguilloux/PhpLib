@@ -186,7 +186,7 @@ class Strings
      * @param  string $string The text to slugify
      * @return string The slugified text
      */
-    function slugify($string) {
+    public static function slugify($string) {
         $string = utf8_decode($string);
         $string = html_entity_decode($string);
 
@@ -213,7 +213,7 @@ class Strings
      * @param string $string The text to be processed.
      * @return string The given text without any linebreaks.
      */
-    function remove_linebreaks ($string) {
+    public static function remove_linebreaks ($string) {
         return (string) str_replace(array("\r", "\r\n", "\n"), '', $string);
     }
 
@@ -223,12 +223,35 @@ class Strings
      * @param mixed $string
      * @return string
      */
-    function isHtml($string) {
+    public static function isHtml($string) {
         if(strlen($string) == strlen(strip_tags($string))){
-            return false
+            return false;
         }
 
         return true;
+    }
+
+    /**
+     * @see static::fullUper()
+     */
+    public static function ucfirstHTMLentity($matches){
+        return "&".ucfirst(strtolower($matches[1])).";";
+    }
+
+
+    /** 
+     * PHP's strtoupper() enhanced, with accents convertion trick
+     * ex : strtotupper('chaudière') = 'CHAUDIèRE'
+     * ex : fullUpper('chaudière') = 'CHAUDIÈRE'
+     *
+     * @uses static::ucfirstHTMLentity()
+     * @param string a string containing accents
+     * @return string a better uppercase string
+     */
+    public static function fullUpper($str){
+        $subject = strtoupper(htmlentities($str, null, 'UTF-8'));
+        $pattern = '/&([A-Z]+);/';
+        return html_entity_decode(preg_replace_callback($pattern, "self::ucfirstHTMLentity", $subject), null, 'UTF-8');
     }
 
 }
