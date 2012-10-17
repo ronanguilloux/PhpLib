@@ -1,21 +1,23 @@
 <?php
 /*
- * Space lib class file
+ * Geo lib class file
  * Created on april 1st 2011 at 11:26:14 by ronan
  *
  * @author Ronan GUILLOUX
  * @license http://www.gnu.org/licenses/gpl.html GNU GPL v3
  * @version 1.0
  * @package PhpLib
- * @filesource class.space.php
+ * @filesource Geo.php
  */
 
+namespace PhpLib;
+
 /**
- * Space lib class
+ * Geo lib class
  * @author Ronan GUILLOUX
  *
  */
-class Space
+class Geo
 {
 
     /**

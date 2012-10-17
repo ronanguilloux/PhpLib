@@ -9,7 +9,11 @@
  * @version //autogentag//
  */
 
-class StringTest extends \PHPUnit_Framework_TestCase
+namespace PhpLib\Tests;
+
+use PhpLib\Strings;
+
+class StringsTest extends \PHPUnit_Framework_TestCase
 {
 
     public function setUp()

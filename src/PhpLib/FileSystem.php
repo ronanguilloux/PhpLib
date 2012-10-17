@@ -7,10 +7,12 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU GPL v3
  * @version 1.0
  * @package PhpLib
- * @filesource filesystem.http.php
+ * @filesource Filesystem.php
  * @see http://fr.php.net/manual/fr/class.recursivedirectoryiterator.php
  * @see http://fr.php.net/manual/fr/class.directoryiterator.php
  */
+
+namespace PhpLib;
 
 /**
  * FileSystem lib class
@@ -136,13 +138,13 @@ class FileSystem
 
         /**
          * Get a dirs-only list (not recursive)
-         * 
+         *
          * @param string $path
          * @return mixed array
          */
         public static function dirs($path)
         {
-            $result = array_filter(glob($path.'*'), 'is_dir'); 
+            $result = array_filter(glob($path.'*'), 'is_dir');
             return (is_array($result)) ? $result : array(); // always returns an array
         }
 
@@ -166,12 +168,12 @@ class FileSystem
 
         /**
          * Recursive Glob (flatting)
-         * 
+         *
          * @param int $pattern the pattern passed to glob()
          * @param int $flags the flags passed to glob()
          * @param string $path the path to scan
          * @example rglob('*.php');
-         * @author http://www.php.net/manual/fr/function.glob.php#87221 
+         * @author http://www.php.net/manual/fr/function.glob.php#87221
          * @return mixed - an flat array of files in the given path matching the pattern.
          */
         public static function rglob($path = '', $pattern='*', $flags = 0)
@@ -179,7 +181,7 @@ class FileSystem
             $paths=glob($path.'*', GLOB_MARK|GLOB_ONLYDIR|GLOB_NOSORT);
             $files=glob($path.$pattern, $flags);
             foreach ($paths as $path) {
-                $files=array_merge($files,self::rglob($path, $pattern, $flags)); 
+                $files=array_merge($files,self::rglob($path, $pattern, $flags));
             }
             return $files;
         }

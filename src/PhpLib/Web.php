@@ -1,21 +1,23 @@
 <?php
 /*
- * Web2 lib class file
+ * Web lib class file
  * Created on 2 may at 11:26:14 by ronan
  *
  * @author Ronan GUILLOUX
  * @license http://www.gnu.org/licenses/gpl.html GNU GPL v3
  * @version 1.0
  * @package PhpLib
- * @filesource class.web2.php
+ * @filesource Web.php
  */
 
+namespace PhpLib;
+
 /**
- * Web2 lib class
+ * Web lib class
  * @author Ronan GUILLOUX
  *
  */
-class Web2
+class Web
 {
 
     /**

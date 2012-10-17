@@ -7,8 +7,10 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU GPL v3
  * @version 1.0
  * @package PhpLib
- * @filesource class.http.php
+ * @filesource Http.php
  */
+
+namespace PhpLib;
 
 /**
  * HTTP lib class

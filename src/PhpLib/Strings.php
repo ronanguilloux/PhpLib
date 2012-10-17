@@ -7,8 +7,10 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU GPL v3
  * @version 1.0
  * @package PhpLib
- * @filesource class.strings.php
+ * @filesource Strings.php
  */
+
+namespace PhpLib;
 
 /**
  * Strings lib class
@@ -239,7 +241,7 @@ class Strings
     }
 
 
-    /** 
+    /**
      * PHP's strtoupper() enhanced, with accents convertion trick
      * ex : strtotupper('chaudière') = 'CHAUDIèRE'
      * ex : fullUpper('chaudière') = 'CHAUDIÈRE'
