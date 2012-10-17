@@ -26,17 +26,17 @@ class GeoTest extends \PHPUnit_Framework_TestCase
      */
     public function testDistance()
     {
-        $this->assertTrue(true);
+        //setLocale(LC_ALL, 'en_US.utf8');
         $lats = array(51.538, 51.537, '51.539', 51.537, 51.537, 'foo', 51.538, null);
         $longs = array(-0.193, -0.192, '-0.195', '-0,192' , 'bar', -0.195, '', -0.193);
-        $expecteds = array('0,91', '0,79', false, false, false, false,false);
+        $expecteds = array('0.91', '0.79', false, false, false, false,false);
         //$geo = new Geo();
         $fromLat = 51.53;
         $fromLong = -0.19;
         foreach($expecteds as $i=>$expected){
             $res = Geo::distance($fromLat, $fromLong, $lats[$i], $longs[$i]);
             if(is_double($res)) {
-                $res = sprintf('%.2f', $res);
+                $res = sprintf('%.2F', $res);
             } else {
                 $res = false;
             }
