@@ -59,6 +59,8 @@ class Http
         return false;
     }
 
+// TODO : is_IP() using '^[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}$'
+
 
     /**
      * Get an title tag inner html valu from url
