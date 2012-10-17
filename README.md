@@ -11,19 +11,6 @@ Build status
 [![Build Status](https://secure.travis-ci.org/ronanguilloux/PhpLib.png?branch=master)](http://travis-ci.org/ronanguilloux/PhpLib)
 
 
-Usage
------
-
-    // Will this financial transaction succeed ?
-    $isSwiftBic = SwiftBic::validate( 'CEDELULLXXX' );
-
-    // Will my letter reach the Labrador islands ?
-    $isCanadianZipCode = ZipCode::validate( 'A0A 1A0', 'Canada');
-
-    // American Express, anyone ?
-    $isAmericanExpress = CreditCard::validate( '12345679123456' );
-
-
 Installing via GitHub
 ---------------------
 
