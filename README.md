@@ -5,9 +5,6 @@ Simple PHP lib, tools & helpers, all GNU AGPL'd.
 
 Inspired by http://www.jonasjohn.de/snippets/php/
 
-[![Build Status](https://secure.travis-ci.org/ronanguilloux/PhpLib.png?branch=master)](http://travis-ci.org/ronanguilloux/PhpLib)
-
-
 Build status
 ------------
 
