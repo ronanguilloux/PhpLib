@@ -24,15 +24,15 @@ class Geo
      * Distance
      * Source : http://derickrethans.nl/spatial-indexes-data-sqlite.html
      *
-     * @param float $latA, ex : 51.5375
-     * @param float $lonA, ex : -0.1933
-     * @param float $latB
-     * @param float $lonB
+     * @param  float  $latA, ex : 51.5375
+     * @param  float  $lonA, ex : -0.1933
+     * @param  float  $latB
+     * @param  float  $lonB
      * @return double distance in km, can be formatted using sprintf('%.2f', $res)
      */
     public static function distance($latA, $lonA, $latB, $lonB)
     {
-        if(!is_float($latA) || !is_float($lonA) || !is_float($latB) || !is_float($lonB)) {
+        if (!is_float($latA) || !is_float($lonA) || !is_float($latB) || !is_float($lonB)) {
             return false;
         }
 
@@ -71,7 +71,7 @@ class Geo
 
         if ($unit == "K") {
             return ($miles * 1.609344);
-        } else if ($unit == "N") {
+        } elseif ($unit == "N") {
             return ($miles * 0.8684);
         } else {
             return $miles;
@@ -82,24 +82,23 @@ class Geo
      * Geocoding, from address to coordinates lat long
      *
      * @author snipplr.com
-     * @param string $address, postal address
-     * @return array coords
+     * @param  string $address, postal address
+     * @return array  coords
      */
     public static function getLatLong($address)
     {
         if (!is_string($address))die("All Addresses must be passed as a string");
         $_url = sprintf('http://maps.google.com/maps?output=js&q=%s',rawurlencode($address));
         $_result = false;
-        if($_result = file_get_contents($_url))
-        {
+        if ($_result = file_get_contents($_url)) {
             if(strpos($_result,'errortips') > 1 || strpos($_result,'Did you mean:') !== false) return false;
             preg_match('!center:\s*{lat:\s*(-?\d+\.\d+),lng:\s*(-?\d+\.\d+)}!U', $_result, $_match);
             $_coords['lat'] = $_match[1];
             $_coords['long'] = $_match[2];
         }
+
         return $_coords;
     }
-
 
     const GOOGLE_GEOCODE_API = "http://maps.googleapis.com/maps/api/geocode";
     const GOOGLE_MATRIX_API = "http://maps.googleapis.com/maps/api/distancematrix";
@@ -126,16 +125,16 @@ class Geo
     /**
      * Geocode
      *
-     * @param string $rawAddress : complete address to resolve as lat/long
-     * @param string $provider : the API to ask, google by default
-     * @param string $output : output format, xml by default
+     * @param  string                          $rawAddress : complete address to resolve as lat/long
+     * @param  string                          $provider   : the API to ask, google by default
+     * @param  string                          $output     : output format, xml by default
      * @return array('anwser'=>array(lat,lng), 'status'=>OK/BAD)
      */
     public function geocode($rawAddress, $provider = 'google', $output = 'xml')
     {
         $rawAddress = $this->prepareForUrlApiCalls($rawAddress);
         $result = false;
-        switch($provider){
+        switch ($provider) {
             // other possible provider : Yahoo place
         default:
             $url = GeoHelper::GOOGLE_GEOCODE_API . "/$output?" . GeoHelper::GOOGLE_QUERY;
@@ -154,14 +153,14 @@ class Geo
         $separator = '|';
         $origin = $this->prepareForUrlApiCalls($origin);
         $destinationsQuery = '';
-        foreach($destinations as $index => $destination) {
-            if($index > 0) {
+        foreach ($destinations as $index => $destination) {
+            if ($index > 0) {
                 $destinationsQuery .= $separator;
             }
             $destination = $destination['rawAddress'];
             $destinationsQuery .= $this->prepareForUrlApiCalls($destination);
         }
-        switch($provider){
+        switch ($provider) {
             // other possible provider : Yahoo place
         default:
             $url = GeoHelper::GOOGLE_MATRIX_API . "/$output?";
@@ -186,12 +185,11 @@ class Geo
         return str_replace(' ', '+', strip_tags($str));
     }
 
-
     /**
      * Ask a remote API & return a ['result'=>foo, 'status'=>bar] array
      *
-     * @param string $url : complete URL to be cUrled
-     * @param string $output : output format, xml by default
+     * @param  string               $url    : complete URL to be cUrled
+     * @param  string               $output : output format, xml by default
      * @return array('answer'=>foo, 'status'=>bar)
      */
     protected function askGoogleGeocode($url, $output = 'xml')
@@ -204,14 +202,14 @@ class Geo
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         $content = trim(curl_exec($c));
         curl_close($c);
-        switch($output){
+        switch ($output) {
             // other possible way : json
         default: // 'xml'
             $content = simplexml_load_string($content);
             // raw string typecasting required on SXE object
-            $status = (string)$content->status;
-            if(!empty($content->result->geometry->location)){
-                $answer = (array)$content->result->geometry->location;
+            $status = (string) $content->status;
+            if (!empty($content->result->geometry->location)) {
+                $answer = (array) $content->result->geometry->location;
             }
             break;
         }
@@ -226,8 +224,8 @@ class Geo
      * Ask a remote API & return a ['result'=>foo, 'status'=>bar] array
      * Ex : http://goo.gl/3Mf35
      *
-     * @param string $url : complete URL to be cUrled
-     * @param string $output : output format, xml by default
+     * @param  string               $url    : complete URL to be cUrled
+     * @param  string               $output : output format, xml by default
      * @return array('answer'=>foo, 'status'=>bar)
      */
     protected function askGoogleDistance($url, $output = 'xml')
@@ -240,14 +238,14 @@ class Geo
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         $content = trim(curl_exec($c));
         curl_close($c);
-        switch($output){
+        switch ($output) {
             // other possible way : json
         default: // 'xml'
             $content = simplexml_load_string($content);
             // raw string typecasting required on SXE object
-            $status = (string)$content->status;
-            if(!empty($content->row)){
-                $answer = (array)$content->row;
+            $status = (string) $content->status;
+            if (!empty($content->row)) {
+                $answer = (array) $content->row;
             }
             break;
         }

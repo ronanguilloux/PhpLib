@@ -14,8 +14,8 @@
 
 namespace PhpLib;
 
-class Encoding {
-
+class Utf8
+{
     protected static $win1252ToUtf8 = array(
         128 => "\xe2\x82\xac",
 
@@ -32,7 +32,6 @@ class Encoding {
         140 => "\xc5\x92",
 
         142 => "\xc5\xbd",
-
 
         145 => "\xe2\x80\x98",
         146 => "\xe2\x80\x99",
@@ -68,7 +67,6 @@ class Encoding {
 
         "\xc2\x8e" => "\xc5\xbd",
 
-
         "\xc2\x91" => "\xe2\x80\x98",
         "\xc2\x92" => "\xe2\x80\x99",
         "\xc2\x93" => "\xe2\x80\x9c",
@@ -103,7 +101,6 @@ class Encoding {
 
         "\xc5\xbd"     => "\x8e",
 
-
         "\xe2\x80\x98" => "\x91",
         "\xe2\x80\x99" => "\x92",
         "\xe2\x80\x9c" => "\x93",
@@ -121,7 +118,8 @@ class Encoding {
         "\xc5\xb8"     => "\x9f"
     );
 
-    static function toUTF8($text){
+    public static function toUTF8($text)
+    {
         /**
          * Function Encoding::toUTF8
          *
@@ -147,25 +145,24 @@ class Encoding {
          *
          */
 
-        if(is_array($text))
-        {
-            foreach($text as $k => $v)
-            {
+        if (is_array($text)) {
+            foreach ($text as $k => $v) {
                 $text[$k] = self::toUTF8($v);
             }
+
             return $text;
-        } elseif(is_string($text)) {
+        } elseif (is_string($text)) {
 
             $max = strlen($text);
             $buf = "";
-            for($i = 0; $i < $max; $i++){
+            for ($i = 0; $i < $max; $i++) {
                 $c1 = $text{$i};
-                if($c1>="\xc0"){ //Should be converted to UTF8, if it's not UTF8 already
+                if ($c1>="\xc0") { //Should be converted to UTF8, if it's not UTF8 already
                     $c2 = $i+1 >= $max? "\x00" : $text{$i+1};
                     $c3 = $i+2 >= $max? "\x00" : $text{$i+2};
                     $c4 = $i+3 >= $max? "\x00" : $text{$i+3};
-                    if($c1 >= "\xc0" & $c1 <= "\xdf"){ //looks like 2 bytes UTF8
-                        if($c2 >= "\x80" && $c2 <= "\xbf"){ //yeah, almost sure it's UTF8 already
+                    if ($c1 >= "\xc0" & $c1 <= "\xdf") { //looks like 2 bytes UTF8
+                        if ($c2 >= "\x80" && $c2 <= "\xbf") { //yeah, almost sure it's UTF8 already
                             $buf .= $c1 . $c2;
                             $i++;
                         } else { //not valid UTF8.  Convert it.
@@ -173,8 +170,8 @@ class Encoding {
                             $cc2 = ($c1 & "\x3f") | "\x80";
                             $buf .= $cc1 . $cc2;
                         }
-                    } elseif($c1 >= "\xe0" & $c1 <= "\xef"){ //looks like 3 bytes UTF8
-                        if($c2 >= "\x80" && $c2 <= "\xbf" && $c3 >= "\x80" && $c3 <= "\xbf"){ //yeah, almost sure it's UTF8 already
+                    } elseif ($c1 >= "\xe0" & $c1 <= "\xef") { //looks like 3 bytes UTF8
+                        if ($c2 >= "\x80" && $c2 <= "\xbf" && $c3 >= "\x80" && $c3 <= "\xbf") { //yeah, almost sure it's UTF8 already
                             $buf .= $c1 . $c2 . $c3;
                             $i = $i + 2;
                         } else { //not valid UTF8.  Convert it.
@@ -182,8 +179,8 @@ class Encoding {
                             $cc2 = ($c1 & "\x3f") | "\x80";
                             $buf .= $cc1 . $cc2;
                         }
-                    } elseif($c1 >= "\xf0" & $c1 <= "\xf7"){ //looks like 4 bytes UTF8
-                        if($c2 >= "\x80" && $c2 <= "\xbf" && $c3 >= "\x80" && $c3 <= "\xbf" && $c4 >= "\x80" && $c4 <= "\xbf"){ //yeah, almost sure it's UTF8 already
+                    } elseif ($c1 >= "\xf0" & $c1 <= "\xf7") { //looks like 4 bytes UTF8
+                        if ($c2 >= "\x80" && $c2 <= "\xbf" && $c3 >= "\x80" && $c3 <= "\xbf" && $c4 >= "\x80" && $c4 <= "\xbf") { //yeah, almost sure it's UTF8 already
                             $buf .= $c1 . $c2 . $c3;
                             $i = $i + 2;
                         } else { //not valid UTF8.  Convert it.
@@ -196,8 +193,8 @@ class Encoding {
                         $cc2 = (($c1 & "\x3f") | "\x80");
                         $buf .= $cc1 . $cc2;
                     }
-                } elseif(($c1 & "\xc0") == "\x80"){ // needs conversion
-                    if(isset(self::$win1252ToUtf8[ord($c1)])) { //found in Windows-1252 special cases
+                } elseif (($c1 & "\xc0") == "\x80") { // needs conversion
+                    if (isset(self::$win1252ToUtf8[ord($c1)])) { //found in Windows-1252 special cases
                         $buf .= self::$win1252ToUtf8[ord($c1)];
                     } else {
                         $cc1 = (chr(ord($c1) / 64) | "\xc0");
@@ -208,62 +205,72 @@ class Encoding {
                     $buf .= $c1;
                 }
             }
+
             return $buf;
         } else {
             return $text;
         }
     }
 
-    static function toWin1252($text) {
-        if(is_array($text)) {
-            foreach($text as $k => $v) {
+    public static function toWin1252($text)
+    {
+        if (is_array($text)) {
+            foreach ($text as $k => $v) {
                 $text[$k] = self::toWin1252($v);
             }
+
             return $text;
-        } elseif(is_string($text)) {
+        } elseif (is_string($text)) {
             return utf8_decode(str_replace(array_keys(self::$utf8ToWin1252), array_values(self::$utf8ToWin1252), self::toUTF8($text)));
         } else {
             return $text;
         }
     }
 
-    static function toISO8859($text) {
+    public static function toISO8859($text)
+    {
         return self::toWin1252($text);
     }
 
-    static function toLatin1($text) {
+    public static function toLatin1($text)
+    {
         return self::toWin1252($text);
     }
 
-    static function fixUTF8($text){
-        if(is_array($text)) {
-            foreach($text as $k => $v) {
+    public static function fixUTF8($text)
+    {
+        if (is_array($text)) {
+            foreach ($text as $k => $v) {
                 $text[$k] = self::fixUTF8($v);
             }
+
             return $text;
         }
 
         $last = "";
-        while($last <> $text){
+        while ($last <> $text) {
             $last = $text;
             $text = self::toUTF8(utf8_decode(str_replace(array_keys(self::$utf8ToWin1252), array_values(self::$utf8ToWin1252), $text)));
         }
         $text = self::toUTF8(utf8_decode(str_replace(array_keys(self::$utf8ToWin1252), array_values(self::$utf8ToWin1252), $text)));
+
         return $text;
     }
 
-    static function UTF8FixWin1252Chars($text){
+    public static function UTF8FixWin1252Chars($text)
+    {
         // If you received an UTF-8 string that was converted from Windows-1252 as it was ISO8859-1
         // (ignoring Windows-1252 chars from 80 to 9F) use this function to fix it.
         // See: http://en.wikipedia.org/wiki/Windows-1252
-
         return str_replace(array_keys(self::$brokenUtf8ToUtf8), array_values(self::$brokenUtf8ToUtf8), $text);
     }
 
-    static function removeBOM($str=""){
-        if(substr($str, 0,3) == pack("CCC",0xef,0xbb,0xbf)) {
+    public static function removeBOM($str="")
+    {
+        if (substr($str, 0,3) == pack("CCC",0xef,0xbb,0xbf)) {
             $str=substr($str, 3);
         }
+
         return $str;
     }
 }

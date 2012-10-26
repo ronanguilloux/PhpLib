@@ -28,7 +28,8 @@ class Strings
      * ucwords('clermont-ferrand') == 'Clermont-ferrand' ... fixing it :
      * @see http://fr.php.net/manual/en/function.ucwords.php
      */
-    public static function capitalizeWords($words, $charList = null) {
+    public static function capitalizeWords($words, $charList = null)
+    {
         // Use ucwords if no delimiters are given
         if (!isset($charList)) {
             return ucwords($words);
@@ -40,7 +41,7 @@ class Strings
         for ($i = 0, $max = strlen($words); $i < $max; $i++) {
             if (strpos($charList, $words[$i]) !== false) {
                 $capitalizeNext = true;
-            } else if ($capitalizeNext) {
+            } elseif ($capitalizeNext) {
                 $capitalizeNext = false;
                 $words[$i] = strtoupper($words[$i]);
             }
@@ -60,31 +61,29 @@ class Strings
         $a = 0;
         $string_new = array();
         $string_exp = explode(" ",$string);
-        foreach($string_exp as $astring)
-        {
-            for($a=0;$a<strlen($astring);$a++)
-            {
+        foreach ($string_exp as $astring) {
+            for ($a=0;$a<strlen($astring);$a++) {
                 /*
                  * check that the character we are at {pos $a} is a word
                  * i.e. if the word was !A the code would fail at !
                  * then loop to the next character and succeed at A
                  * check at character position $a
                  */
-                if(preg_match("'\w'",$astring[$a]))
-                {
+                if (preg_match("'\w'",$astring[$a])) {
                     $astring[$a] = strtolower($astring[$a]);
                     break;
                 }
             }
             $string_new[] = $astring;
         }
+
         return implode(" ",$string_new);
     }
 
     /**
      * Convert unwanted smart quotes.
      *
-     * @param smartquoted $string
+     * @param  smartquoted   $string
      * @return unsmartquoted
      * @see http://shiflett.org/blog/2005/oct/convert-smart-quotes-with-php
      */
@@ -109,18 +108,20 @@ class Strings
      * Get the text between $start and $end
      *
      * @author jonasjohn.de
-     * @param string $content (all content)
-     * @param string $start
-     * @param string $end
+     * @param  string $content (all content)
+     * @param  string $start
+     * @param  string $end
      * @return string
      */
     public static function getBetween($content, $start, $end)
     {
         $r = explode($start, $content);
-        if (isset($r[1])){
+        if (isset($r[1])) {
             $r = explode($end, $r[1]);
+
             return $r[0];
         }
+
         return '';
     }
 
@@ -134,14 +135,13 @@ class Strings
     public static function niceImplode($assoc_array)
     {
         $new_array = array_map(create_function('$key, $value', 'return $key.":".$value." --- ";'), array_keys($assoc_array), array_values($assoc_array));
+
         return implode($new_array);
     }
 
-
     public static function array_merge_recursive_simple($Arr1, $Arr2)
     {
-        foreach($Arr2 as $key => $Value)
-        {
+        foreach ($Arr2 as $key => $Value) {
             if(array_key_exists($key, $Arr1) && is_array($Value))
                 $Arr1[$key] = self::array_merge_recursive_simple($Arr1[$key], $Arr2[$key]);
 
@@ -154,32 +154,33 @@ class Strings
 
     }
 
-
     /**
      * Return (bool) if $x contains $y
      *
      * @author jonasjohn.de
-     * @param string $str
-     * @param string $content
-     * @param bool $ignorecase
+     * @param  string  $str
+     * @param  string  $content
+     * @param  bool    $ignorecase
      * @return boolean
      */
     public static function contains($str, $content, $ignorecase = true)
     {
-        if ($ignorecase){
+        if ($ignorecase) {
             $str = strtolower($str);
             $content = strtolower($content);
         }
+
         return strpos($content,$str) ? true : false;
     }
 
-    public static function sanitize($entry){
-        if(is_string($entry)){
+    public static function sanitize($entry)
+    {
+        if (is_string($entry)) {
             return htmlspecialchars(trim($entry));
         }
+
         return $entry;
     }
-
 
     /**
      * Modifies a string to remove all non ASCII characters and spaces.
@@ -188,7 +189,8 @@ class Strings
      * @param  string $string The text to slugify
      * @return string The slugified text
      */
-    public static function slugify($string) {
+    public static function slugify($string)
+    {
         $string = utf8_decode($string);
         $string = html_entity_decode($string);
 
@@ -204,7 +206,6 @@ class Strings
         $string = strtolower($string);
 
         if (empty($string)) return 'n-a';
-
         return utf8_encode($string);
     }
 
@@ -212,21 +213,23 @@ class Strings
      * Removes all linebreaks
      *
      * @link http://antoine.goutenoir.com/blog/2010/10/11/php-slugify-a-string/
-     * @param string $string The text to be processed.
+     * @param  string $string The text to be processed.
      * @return string The given text without any linebreaks.
      */
-    public static function remove_linebreaks ($string) {
+    public static function remove_linebreaks ($string)
+    {
         return (string) str_replace(array("\r", "\r\n", "\n"), '', $string);
     }
 
     /**
      * is_html : Tests a string & check if it's html
      *
-     * @param mixed $string
+     * @param  mixed  $string
      * @return string
      */
-    public static function isHtml($string) {
-        if(strlen($string) == strlen(strip_tags($string))){
+    public static function isHtml($string)
+    {
+        if (strlen($string) == strlen(strip_tags($string))) {
             return false;
         }
 
@@ -236,7 +239,8 @@ class Strings
     /**
      * @see static::fullUper()
      */
-    public static function ucfirstHTMLentity($matches){
+    public static function ucfirstHTMLentity($matches)
+    {
         return "&".ucfirst(strtolower($matches[1])).";";
     }
 
@@ -250,9 +254,11 @@ class Strings
      * @param string a string containing accents
      * @return string a better uppercase string
      */
-    public static function fullUpper($str){
+    public static function fullUpper($str)
+    {
         $subject = strtoupper(htmlentities($str, null, 'UTF-8'));
         $pattern = '/&([A-Z]+);/';
+
         return html_entity_decode(preg_replace_callback($pattern, "self::ucfirstHTMLentity", $subject), null, 'UTF-8');
     }
 

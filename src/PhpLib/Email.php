@@ -42,14 +42,12 @@ class Email
     /**
      * Email string validator
      *
-     * @param string $email - email to validate
+     * @param  string $email - email to validate
      * @return bool
      */
     public static function is_Email($email)
     {
         return filter_var($email,FILTER_VALIDATE_EMAIL);
     }
-
-
 
 }

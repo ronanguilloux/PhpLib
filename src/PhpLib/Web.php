@@ -23,10 +23,10 @@ class Web
     /**
      * Build Gravatar's html <img /> using an email
      *
-     * @param string $email - Email address to show gravatar for
-     * @param int $size - Size of gravatar
-     * @param string $default - URL of default gravatar to use
-     * @param string $rating - Rating of Gravatar(G, PG, R, X)
+     * @param  string $email   - Email address to show gravatar for
+     * @param  int    $size    - Size of gravatar
+     * @param  string $default - URL of default gravatar to use
+     * @param  string $rating  - Rating of Gravatar(G, PG, R, X)
      * @return html's <img /> filled tag
      */
     public static function showGravatar($email, $size, $default,  $rating)
@@ -40,7 +40,7 @@ class Web
      * Get website favicon from url
      *
      * @author snipplr.com
-     * @param string $url
+     * @param  string $url
      * @return string favicon url
      */
     public static function getFavicon($url)
@@ -57,38 +57,41 @@ class Web
      * @param string $string
      * return SEOized string
      */
-    public static function SEOize($string){
+    public static function SEOize($string)
+    {
         $string = preg_replace("`\[.*\]`U","",$string);
         $string = preg_replace('`&(amp;)?#?[a-z0-9]+;`i','-',$string);
         $string = preg_replace( "`&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);`i","\\1", $string );
         $string = preg_replace( array("`[^a-z0-9]`i","`[-]+`") , "-", $string);
         $string = htmlentities($string, ENT_COMPAT, 'utf-8');return strtolower(trim($string, '-'));
+
         return $string;
     }
 
     /**
      * Get GoogleKeyWords used in referer URL
      *
-     * @param string $referer (null, URL or $_SERVER['HTTP_REFERER'])
+     * @param  string   $referer (null, URL or $_SERVER['HTTP_REFERER'])
      * @return keywords array
      * @see http://webarto.com/12/php-google-keywords
      */
     public static function getGoogleKeyWordUsed($referer = null)
     {
         // see
-        if(is_null($referer)) {
+        if (is_null($referer)) {
             $referer = $_SERVER['HTTP_REFERER'];
         }
         $referer = urldecode($referer);
-        if(strstr($referer,"google")){
+        if (strstr($referer,"google")) {
             preg_match('/q=([a-zA-Z0-9\s\č\ć\ž\š\đ]+)/i',$referer,$bingo);
             //echo $bingo[0];
             $keywords = str_replace('q=','',$bingo[0]);
             $keywords = explode(' ',$keywords);
             foreach ($keywords as $keyword) {
                 $unix = time();
-                if(!empty($keyword)){/*do something, eg insert into database*/};
+                if (!empty($keyword)) {/*do something, eg insert into database*/};
             }
+
             return $keywords;
         }
     }
@@ -107,21 +110,21 @@ class Web
         $text = preg_replace('~[^\\pL\d]+~u', $char, $text);
         $text = trim($text, $char);
         // transliterate
-        if (function_exists('iconv'))
-        {
+        if (function_exists('iconv')) {
             $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
         }
         $text = strtolower($text);
         // remove unwanted characters
         $text = preg_replace('~[^'.$char.'\w]+~', '', $text);
-        if (empty($text))
-        {
+        if (empty($text)) {
             return 'n-a';
         }
+
         return $text;
     }
 
-    public static function urlize($string){
+    public static function urlize($string)
+    {
         $find   = array(
             '/[^A-Za-z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]/'  #alphanum + accents
             ,'/[-]+/'             # multi -
@@ -129,6 +132,7 @@ class Web
             ,'/(-$)/'             # - as end
         );
         $repl = array('-','-','','');
+
         return preg_replace($find, $repl, $string);
     }
 

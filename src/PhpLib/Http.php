@@ -31,7 +31,7 @@ class Http
         $extension = "";
 
         // Fixing filename value
-        if(!isset($filename)){
+        if (!isset($filename)) {
             $filename = basename($file);
         }
 
@@ -58,58 +58,61 @@ class Http
         if (preg_match('/^(http|https|ftp)://([A-Z0-9][A-Z0-9_-]*(?:.[A-Z0-9][A-Z0-9_-]*)+):?(d+)?/?/i', $url)) {
             return true;
         }
+
         return false;
     }
 
 // TODO : is_IP() using '^[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}$'
 
-
     /**
      * Get an title tag inner html valu from url
      *
-     * @param string $url
+     * @param  string $url
      * @return string title
      */
     public static function getTitleValue($url)
     {
         $fp = fopen($url,"r");
-        while (!feof($fp) ){
+        while (!feof($fp) ) {
             $page .= fgets($fp, 4096);
         }
         $title = eregi("<title>(.*)</title>",$page,$regs);
         $title = $regs[1];
         fclose($fp);
+
         return $title;
     }
 
     /**
      * Get title tag content from html source
      *
-     * @param string $page html source
+     * @param  string $page html source
      * @return string title
      */
     public static function getPageTitleFromSource($page)
     {
         preg_match("/<title>(.*)<\/title>/imsU", $page, $matches);
+
         return $matches[1];
     }
 
     /**
      * Get an html tag inner html value
      *
-     * @param string $url
-     * @param string $tag - such as "body class='web'"
+     * @param  string $url
+     * @param  string $tag - such as "body class='web'"
      * @return string title
      */
     public static function getTagValue($url,$tag)
     {
         $fp = fopen($url,"r");
-        while (!feof($fp) ){
+        while (!feof($fp) ) {
             $page .= fgets($fp, 4096);
         }
         $title = eregi("<".$tag.">(.*)</".$tag.">",$page,$regs);
         $title = $regs[1];
         fclose($fp);
+
         return $title;
     }
 
@@ -118,7 +121,7 @@ class Http
      *
      * @param string $content html
      * @param int depth, 0 as default value
-     * @param int $max-depth, 9 as default value
+     * @param  int   $max-depth, 9 as default value
      * @return array
      */
     public static function getURLs($content, $depth = 0, $max_depth = 9)
@@ -127,6 +130,7 @@ class Http
         $matches = array();
         $URL_pattern = "/\s+href\s*=\s*[\"\']?([^\s\"\']+)[\"\'\s]+/ims";
         preg_match_all ($URL_pattern, $content, $matches, PREG_PATTERN_ORDER);
+
         return $matches[1];
 
     }
@@ -139,16 +143,17 @@ class Http
     public static function getLocalization()
     {
 
-        ( ( (float)phpversion() < 5.3 ) ) ? die ( "Fatal error : PHP < 5.3 !, can't proceed in " . __CLASS__ . '::' . __METHOD__ ) : '';
+        ( ( (float) phpversion() < 5.3 ) ) ? die ( "Fatal error : PHP < 5.3 !, can't proceed in " . __CLASS__ . '::' . __METHOD__ ) : '';
         $site = file_get_contents( "http://www.google.fr/search?q=VBXMCBVFKJSHDKHDKF" );
         $getLocationViaGoogle = function ( $html ){
             $regex = "#<\w+\s\w+=\"tbos\">([^<]{3,})<\/\w+>#i";
             preg_match_all( $regex, $html, $matches );
+
             return $matches[1][0];
         };
+
         return $getLocationViaGoogle( $site );
     }
-
 
     /**
      * Check a domain
@@ -176,9 +181,9 @@ class Http
             $status = ($finishTime - $startTime) * 1000;
             $serverStatus = floor($serverStatus);
         }
+
         return $serverStatus;
     }
-
 
     /**
      * Get Real IP Address, using $_SERVER array, HTTP_* values
@@ -194,6 +199,7 @@ class Http
         } else {
             $ip=$_SERVER['REMOTE_ADDR'];
         }
+
         return $ip;
     }
 
@@ -205,8 +211,7 @@ class Http
     protected static function getUrl($url, $method='', $vars='')
     {
         $ch = curl_init();
-        if ($method == 'post')
-        {
+        if ($method == 'post') {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
         }
@@ -217,24 +222,29 @@ class Http
         curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookies.txt');
         $buffer = curl_exec($ch);
         curl_close($ch);
+
         return $buffer;
     }
 
     /**
      * Base64 Encode
      */
-    public static function base64url_encode($plainText) {
+    public static function base64url_encode($plainText)
+    {
         $base64 = base64_encode($plainText);
         $base64url = strtr($base64, '+/=', '-_,');
+
         return $base64url;
     }
 
     /**
      * Base64 Decode
      */
-    public static function base64url_decode($plainText) {
+    public static function base64url_decode($plainText)
+    {
         $base64url = strtr($plainText, '-_,', '+/=');
         $base64 = base64_decode($base64url);
+
         return $base64;
     }
 

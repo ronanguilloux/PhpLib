@@ -33,13 +33,14 @@ class FileSystem
      * @see http://www.lateralcode.com/remove-svn-php/
      * @tutorial <?php removeSVN( './' ); ?>
      */
-    public function removeSVN( $dir ) {
+    public function removeSVN( $dir )
+    {
         echo "Searching: $dir\n\t";
 
         $flag = false; // haven't found .svn directory
         $svn = $dir . '.svn';
 
-        if( is_dir( $svn ) ) {
+        if ( is_dir( $svn ) ) {
             if( !chmod( $svn, 777 ) )
                 echo "File permissions could not be changed (this may or may not be a problem--check the statement below).\n\t"; // if the permissions were already 777, this is not a problem
 
@@ -58,7 +59,7 @@ class FileSystem
         echo "\n\n";
 
         $handle = opendir( $dir );
-        while( false !== ( $file = readdir( $handle ) ) ) {
+        while ( false !== ( $file = readdir( $handle ) ) ) {
             if( $file == '.' || $file == '..' ) // don't get lost by recursively going through the current or top directory
                 continue;
 
@@ -73,12 +74,13 @@ class FileSystem
      * @param string filepath
      * @return mixed : a boolean (false) or a valid string
      */
-    public static function getExtension($filepath){
+    public static function getExtension($filepath)
+    {
         if(!file_exists($filepath)) return false;
         if(is_readable($filepath)) return false;
+
         return pathinfo($filepath, PATHINFO_EXTENSION);
     }
-
 
     /**
      * Supprime un repertoire et tout son contenu
@@ -88,8 +90,7 @@ class FileSystem
     protected function rmdirDeep($dir)
     {
         $nodes = glob($dir.'/*', GLOB_MARK);
-        foreach($nodes as $node)
-        {
+        foreach ($nodes as $node) {
             if(is_dir($node))
                 $this->rmdirDeep($node);
             else
@@ -100,18 +101,19 @@ class FileSystem
             rmdir($dir);
     }
 
-
     /**
      * get human filesize
      *
      * @author http://goo.gl/ZaY0o (a comment in http://www.php.net/filesize)
-     * @param int $bytes
-     * @param int $decimals count
+     * @param  int    $bytes
+     * @param  int    $decimals count
      * @return string human readable size
      */
-    public static function human_filesize($bytes, $decimals = 2) {
+    public static function human_filesize($bytes, $decimals = 2)
+    {
         $sz = 'BKMGTP';
         $factor = floor((strlen($bytes) - 1) / 3);
+
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
     }
 
@@ -122,10 +124,11 @@ class FileSystem
      * postcondition: $dir and all it's contents are removed
      * @param string $dir
          */
-        public static function DelTree( $dir ) {
+        public static function DelTree( $dir )
+        {
             $files = glob( $dir . '*', GLOB_MARK ); // find all files in the directory
 
-            foreach( $files as $file ) {
+            foreach ($files as $file) {
                 if( substr( $file, -1 ) == '/' )
                     $this->DelTree( $file ); // recursively apply this to sub directories
                 else
@@ -145,19 +148,16 @@ class FileSystem
         public static function dirs($path)
         {
             $result = array_filter(glob($path.'*'), 'is_dir');
+
             return (is_array($result)) ? $result : array(); // always returns an array
         }
 
         public static function listFiles($dir)
         {
-            if(is_dir($dir))
-            {
-                if($handle = opendir($dir))
-                {
-                    while(($file = readdir($handle)) !== false)
-                    {
-                        if($file != "." && $file != ".." && $file != "Thumbs.db")
-                        {
+            if (is_dir($dir)) {
+                if ($handle = opendir($dir)) {
+                    while (($file = readdir($handle)) !== false) {
+                        if ($file != "." && $file != ".." && $file != "Thumbs.db") {
                             echo '<a target="_blank" href="'.$dir.$file.'">'.$file.'</a><br>'."\n";
                         }
                     }
@@ -183,6 +183,7 @@ class FileSystem
             foreach ($paths as $path) {
                 $files=array_merge($files,self::rglob($path, $pattern, $flags));
             }
+
             return $files;
         }
 
@@ -197,29 +198,21 @@ class FileSystem
             $ds = DIRECTORY_SEPARATOR;
             $dir = $virtual ? realpath($dir) : $dir;
             $dir = substr($dir, -1) == $ds ? substr($dir, 0, -1) : $dir;
-            if (is_dir($dir) && $handle = opendir($dir))
-            {
-                while ($file = readdir($handle))
-                {
-                    if ($file == '.' || $file == '..')
-                    {
+            if (is_dir($dir) && $handle = opendir($dir)) {
+                while ($file = readdir($handle)) {
+                    if ($file == '.' || $file == '..') {
                         continue;
-                    }
-                    elseif (is_dir($dir.$ds.$file))
-                    {
+                    } elseif (is_dir($dir.$ds.$file)) {
                         destroyDir($dir.$ds.$file);
-                    }
-                    else
-                    {
+                    } else {
                         unlink($dir.$ds.$file);
                     }
                 }
                 closedir($handle);
                 rmdir($dir);
+
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -234,30 +227,31 @@ class FileSystem
          * @param string $destination
          * @param bool $overwrite
          */
-        public static function zipCreate($files = array(),$destination = '',$overwrite = false) {
+        public static function zipCreate($files = array(),$destination = '',$overwrite = false)
+        {
             //if the zip file already exists and overwrite is false, return false
-            if(file_exists($destination) && !$overwrite) { return false; }
+            if (file_exists($destination) && !$overwrite) { return false; }
                 //vars
                 $valid_files = array();
             //if files were passed in...
-            if(is_array($files)) {
+            if (is_array($files)) {
                 //cycle through each file
-                foreach($files as $file) {
+                foreach ($files as $file) {
                     //make sure the file exists
-                    if(file_exists($file)) {
+                    if (file_exists($file)) {
                         $valid_files[] = $file;
                     }
                 }
             }
             //if we have good files...
-            if(count($valid_files)) {
+            if (count($valid_files)) {
                 //create the archive
                 $zip = new ZipArchive();
-                if($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true) {
+                if ($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true) {
                     return false;
                 }
                 //add the files
-                foreach($valid_files as $file) {
+                foreach ($valid_files as $file) {
                     $zip->addFile($file,$file);
                 }
                 //debug
@@ -268,9 +262,7 @@ class FileSystem
 
                 //check to make sure the file exists
                 return file_exists($destination);
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -282,7 +274,8 @@ class FileSystem
          * @param string $file path to zip file
          * @param string $destination destination directory for unzipped files
          */
-        public static function unzipFile($file, $destination){
+        public static function unzipFile($file, $destination)
+        {
             // create object
             $zip = new ZipArchive() ;
             // open archive
@@ -298,24 +291,26 @@ class FileSystem
 
 
         // Other unzip method
-        public static function unZip($location,$newLocation){
-            if(exec("unzip $location",$arr)){
+        public static function unZip($location,$newLocation)
+        {
+            if (exec("unzip $location",$arr)) {
                 mkdir($newLocation);
-                for($i = 1;$i< count($arr);$i++){
+                for ($i = 1;$i< count($arr);$i++) {
                     $file = trim(preg_replace("~inflating: ~","",$arr[$i]));
                     copy($location.'/'.$file,$newLocation.'/'.$file);
                     unlink($location.'/'.$file);
                 }
+
                 return TRUE;
-            }else{
+            } else {
                 return FALSE;
             }
         }
 
 
         // see http://fr.php.net/manual/fr/function.stat.php
-        public static function alt_stat($file) {
-
+        public static function alt_stat($file)
+        {
             clearstatcache();
             $ss=@stat($file);
             if(!$ss) return false; //Couldnt stat file
@@ -406,6 +401,7 @@ class FileSystem
                 );
 
             clearstatcache();
+
             return $s;
         }
 
@@ -422,6 +418,7 @@ class FileSystem
         {
             $files = glob( $directory.'/*.*' );
             array_multisort( array_map( 'filemtime', $files ), SORT_NUMERIC, SORT_DESC, $files );
+
             return $files[0];
         }
 }

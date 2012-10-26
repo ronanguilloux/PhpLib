@@ -33,9 +33,9 @@ class GeoTest extends \PHPUnit_Framework_TestCase
         //$geo = new Geo();
         $fromLat = 51.53;
         $fromLong = -0.19;
-        foreach($expecteds as $i=>$expected){
+        foreach ($expecteds as $i=>$expected) {
             $res = Geo::distance($fromLat, $fromLong, $lats[$i], $longs[$i]);
-            if(is_double($res)) {
+            if (is_double($res)) {
                 $res = sprintf('%.2F', $res);
             } else {
                 $res = false;
@@ -45,5 +45,3 @@ class GeoTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-?>
-
