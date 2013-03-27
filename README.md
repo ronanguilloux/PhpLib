@@ -40,6 +40,7 @@ Run install (will build the autoload):
 Testing
 -------
 
+    $ php composer.phar install --dev
     $ phpunit --coverage-text
 
 
