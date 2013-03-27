@@ -8,7 +8,7 @@ namespace PhpLib;
 
 /**
  * Isocodes lib class
- * @author Ronan GUILLOUX
+ * @author Annelies B.
  *
  */
 class Isocodes {
