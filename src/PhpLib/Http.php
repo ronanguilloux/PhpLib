@@ -247,5 +247,17 @@ class Http
 
         return $base64;
     }
+    
+    public static function remoteCheck($ip, $port=22) {
+        if(!filter_var($ip, FILTER_VALIDATE_IP)) {
+            return false;
+        }
+        $sock = @fsockopen( $ip, $port, $num, $error, 2 ); //2 is the ping time, you can sub what you need
+        if( !$sock ){
+            return false;
+        }
+        fclose($sock);
+        return true;
+    }
 
 }
