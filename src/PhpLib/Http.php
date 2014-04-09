@@ -248,6 +248,14 @@ class Http
         return $base64;
     }
     
+    /**
+     * Server Pinger
+     *
+     * @param string $ip
+     * @param int $port
+     * 
+     * @return boolean
+     */
     public static function remoteCheck($ip, $port=22) {
         if(!filter_var($ip, FILTER_VALIDATE_IP)) {
             return false;
